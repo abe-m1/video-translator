@@ -1,65 +1,100 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import Head from 'next/head';
+import styles from '../styles/Home.module.css';
+import SearchBar from '../components/SearchBar';
+import VideoList from '../components/VideoList';
+import VideoPlayer from '../components/VideoPlayer';
+import TranslationBox from '../components/TranslationBox';
 
-export default function Home() {
+const API_KEY = process.env.YOUTUBE_KEY;
+
+const dictionary = {
+  0: [
+    { french: 'un', english: 'one' },
+    { french: 'deux', english: 'deux' },
+  ],
+  1: [
+    { french: 'trois', english: 'three' },
+    { french: 'Quatre', english: 'four' },
+  ],
+  2: [{ word: 'word2' }],
+};
+
+const Home = () => {
+  const [videoList, setVideoList] = useState([]);
+  const [selectedVideo, setSelectedVideo] = useState({});
+  const [currentDictionary, setCurrentDictionary] = useState({});
+  const [currentTime, setCurrentTime] = useState(0);
+  useEffect(() => {
+    setCurrentDictionary(dictionary);
+  }, []);
+  const onTermChange = (searchTerm) => {
+    console.log(searchTerm);
+    axios
+      .get('https://www.googleapis.com/youtube/v3/search', {
+        params: {
+          key: API_KEY,
+          type: 'video',
+          part: 'snippet',
+          q: searchTerm,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.items);
+        setVideoList(response.data.items);
+      });
+  };
+
+  const onVideoSelect = (video) => {
+    console.log('on sleect', video);
+    setSelectedVideo(video);
+  };
+
+  const saveTranslation = (french, english) => {
+    // let time = getTimeBeforeSave();
+    console.log('in root', french, english, currentTime);
+    let time = Math.floor(currentTime / 20);
+    console.log(time);
+    let modified = currentDictionary;
+    if (modified[time]) {
+      modified[time].push({ french, english });
+    } else {
+      modified[`${time}`] = [];
+      modified[time].push({ french, english });
+    }
+    setCurrentDictionary(Object.assign({}, modified));
+  };
+
+  const getTimeBeforeSave = (time) => {
+    setCurrentTime(time);
+    // return time;
+  };
+  console.log('rerender');
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
-        <title>Create Next App</title>
+        <title>Video App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      <main>
+        <div class="container">
+          <SearchBar onTermChange={onTermChange} />
+          <div className={styles.row}>
+            <VideoPlayer
+              video={selectedVideo}
+              getTimeBeforeSave={getTimeBeforeSave}
+              dictionary={currentDictionary}
+            />
+            <div style={{ width: '80%' }}></div>
+            <VideoList videos={videoList} onVideoSelect={onVideoSelect} />
+          </div>
+          <TranslationBox saveTranslation={saveTranslation} />
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
-  )
-}
+  );
+};
+
+export default Home;
