@@ -5,6 +5,7 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
   let player;
   let [currentTime, setCurrentTime] = useState(0);
   useEffect(() => {
+    console.log('video NOW', video);
     if (!window.YT) {
       // If not, load the script asynchronously
       const tag = document.createElement('script');
@@ -19,7 +20,7 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
       // If script is already there, load the video directly
       loadVideo();
     }
-  }, []);
+  }, [video]);
 
   useEffect(() => {
     console.log(dictionary);
@@ -27,9 +28,17 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
 
   const loadVideo = () => {
     // the Player object is created uniquely based on the id in props
+    let videoId;
+    if (!video.id || !video.id.videoId) {
+      videoId = 'MaFU5Wc-evM';
+    } else {
+      videoId = video.id.videoId;
+    }
     player = new window.YT.Player(`youtube-player`, {
       // videoId: video.id.videoId,
-      videoId: 'MaFU5Wc-evM',
+      // videoId: 'MaFU5Wc-evM',
+
+      videoId: videoId,
       events: {
         onReady: onPlayerReady,
         onStateChange: getITime,
@@ -70,29 +79,19 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
     return <h1>select a video</h1>;
   }
   return (
-    <>
-      <div class="embed-responsive embed-responsive-16by9">
-        {/* <iframe
+    <div
+      style={{
+        padding: '20px',
+        backgroundColor: 'black',
+        flex: '70%',
+        margin: 'auto',
+      }}
+    >
+      {/* <iframe
           class="embed-responsive-item"
           src={`https://www.youtube.com/embed/${video.id.videoId}`}
         /> */}
-        <div id={`youtube-player`} />
-      </div>
-      <div class="details">
-        <button onClick={getTime}>GET TIME</button>
-        {currentTime}
-
-        <p>{positionIndicator}</p>
-        {dictionary[positionIndicator] &&
-          dictionary[positionIndicator].map((word, i) => (
-            <div key={i}>
-              <span>{word.french}</span>
-              <li>{word.english}</li>
-            </div>
-          ))}
-        {/* <h4>{video.snippet.title}</h4>
-        <p>{video.snippet.description}</p> */}
-      </div>
-    </>
+      <div id={`youtube-player`} />
+    </div>
   );
 }
