@@ -37,12 +37,39 @@ const Home = ({ dictionary }) => {
       });
   };
 
-  const onVideoSelect = (video) => {
+  const onVideoSelect = async (video) => {
+    const contentType = 'application/json';
     console.log('on sleect', video);
-    setSelectedVideo(Object.assign({}, modifiedvideo));
+    // setSelectedVideo(Object.assign({}, video));
+    const res = await fetch('/api/video', {
+      method: 'POST',
+      headers: {
+        Accept: contentType,
+        'Content-Type': contentType,
+      },
+      body: JSON.stringify({
+        // ...form,
+        etag: video.etag,
+        videoId: video.id.videoId,
+        title: video.snippet.title,
+        thumbnail: video.snippet.thumbnail.default.url,
+      }),
+    });
+    const { data } = await res.json();
+    console.log(data);
+
+    setCurrentDictionary(Object.assign({}, data.dictionary || {}));
+    setSelectedVideo(data);
+
+    // await dbConnect();
+
+    // // const result = await Video.find({});
+    // const result = await Video.findOne({ etag: video.etag });
+    // console.log('this is result', result);
   };
 
   const saveTranslation = async (french, english) => {
+    console.log('SV', selectedVideo);
     // let time = getTimeBeforeSave();
     console.log('in root', french, english, currentTime);
     const contentType = 'application/json';
@@ -67,7 +94,7 @@ const Home = ({ dictionary }) => {
         },
         // body: JSON.stringify(form),
         body: JSON.stringify({
-          _id: '604d92be15c5783b1735f50e',
+          _id: selectedVideo._id,
           name: 'video2',
           dictionary: modified,
         }),

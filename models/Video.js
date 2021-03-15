@@ -4,12 +4,15 @@ const VideoSchema = new mongoose.Schema({
   name: {
     type: String,
   },
-  youTubeId: {
+  etag: {
     type: String,
   },
   dictionary: {
     type: Object,
   },
+  videoId: { type: String },
+  title: { type: String },
+  thumbnail: { type: String },
 });
 
 // export default mongoose.models.Video || mongoose.model('Video', VideoSchema);

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { isConstructorDeclaration } from 'typescript';
 import styles from '../styles/VideoList.module.scss';
 import VideoListItem from './VideoListItem';
@@ -8,6 +9,7 @@ export default function VideoList({
   currentTime,
   dictionary,
 }) {
+  const [showVideoList, setShowVideoList] = useState(true);
   // const onVideoSelect = (video) => {
   //   // this.$emit("videoSelect", video);
   //   console.log('video', video);
@@ -38,8 +40,8 @@ export default function VideoList({
   return (
     <div class={styles.container}>
       <div className={styles.selectorBox}>
-        <a>Select</a>
-        <a>Translations</a>
+        <a onClick={() => setShowVideoList(true)}>Playlist</a>
+        <a onClick={() => setShowVideoList(false)}>Translations</a>
       </div>
 
       {/* <ul>{videoItems}</ul> */}
@@ -47,45 +49,47 @@ export default function VideoList({
       <div class="details">
         {/* <button onClick={getTime}>GET TIME</button>
         {currentTime} */}
-
+        {showVideoList && <ul>{videoItems}</ul>}
         {/* <p>{positionIndicator}</p>
         <p>{currentTime}</p> */}
-        <ul style={{ padding: 0 }}>
-          {dictionary[positionIndicator] &&
-            dictionary[positionIndicator].map((word, i) => {
-              return (
-                <li key={i} style={{ display: 'flex' }}>
-                  <p className={styles.time}>
-                    {formatTime(Math.round(word.time))}
-                  </p>
-                  <div>
-                    <p
-                      style={{
-                        padding: '1rem',
-                        color: 'skyblue',
-                        fontSize: '18px',
-                        fontWeight: '700',
-                        margin: 0,
-                        paddingBottom: 0,
-                      }}
-                    >
-                      {word.french}
+        {!showVideoList && (
+          <ul style={{ padding: 0 }}>
+            {dictionary[positionIndicator] &&
+              dictionary[positionIndicator].map((word, i) => {
+                return (
+                  <li key={i} style={{ display: 'flex' }}>
+                    <p className={styles.time}>
+                      {formatTime(Math.round(word.time))}
                     </p>
-                    <p
-                      style={{
-                        padding: '1rem',
-                        color: 'lightgray',
-                        margin: 0,
-                        paddingTop: '5px',
-                      }}
-                    >
-                      {word.english}
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-        </ul>
+                    <div>
+                      <p
+                        style={{
+                          padding: '1rem',
+                          color: 'skyblue',
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          margin: 0,
+                          paddingBottom: 0,
+                        }}
+                      >
+                        {word.french}
+                      </p>
+                      <p
+                        style={{
+                          padding: '1rem',
+                          color: 'lightgray',
+                          margin: 0,
+                          paddingTop: '5px',
+                        }}
+                      >
+                        {word.english}
+                      </p>
+                    </div>
+                  </li>
+                );
+              })}
+          </ul>
+        )}
 
         {/* <h4>{video.snippet.title}</h4>
         <p>{video.snippet.description}</p> */}

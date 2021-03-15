@@ -27,18 +27,21 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
   }, [dictionary]);
 
   const loadVideo = () => {
-    // the Player object is created uniquely based on the id in props
-    let videoId;
-    if (!video.id || !video.id.videoId) {
-      videoId = 'MaFU5Wc-evM';
-    } else {
-      videoId = video.id.videoId;
+    if (!video.videoId) {
+      return;
     }
+    // the Player object is created uniquely based on the id in props
+    // let videoId;
+    // if (!video.videoId) {
+    //   videoId = 'MaFU5Wc-evM';
+    // } else {
+    //   videoId = video.id.videoId;
+    // }
     player = new window.YT.Player(`youtube-player`, {
       // videoId: video.id.videoId,
       // videoId: 'MaFU5Wc-evM',
 
-      videoId: videoId,
+      videoId: video.videoId,
       events: {
         onReady: onPlayerReady,
         onStateChange: getITime,
@@ -75,8 +78,20 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
 
   const positionIndicator = Math.floor(currentTime / 20);
 
-  if (!video) {
-    return <h1>select a video</h1>;
+  if (!video.videoId) {
+    return (
+      <div
+        style={{
+          padding: '20px',
+          backgroundColor: 'black',
+          flex: '70%',
+          margin: 'auto',
+          height: '70vh',
+        }}
+      >
+        <h1 style={{ color: 'white' }}>select a video</h1>
+      </div>
+    );
   }
   return (
     <div
