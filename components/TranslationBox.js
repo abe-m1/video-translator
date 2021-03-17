@@ -73,24 +73,47 @@ export default function TranslationBox({ saveTranslation }) {
       }}
     >
       <div>
-        <p>Translation box</p>
-        <input value={french} onChange={onChange} ref={inputRef} />
-        {english && <input value={english} onChange={onEnglishChange} />}
-        {!searchComplete && (
+        {/* <p>Translation box</p> */}
+        <textarea
+          style={{ width: '200px', height: '136px' }}
+          value={french}
+          onChange={onChange}
+          ref={inputRef}
+          placeholder="Type in a word or phrase in french"
+        />
+        {/* {english && <textarea value={english} onChange={onEnglishChange} />} */}
+        <textarea
+          style={{ width: '200px', height: '136px' }}
+          value={english}
+          onChange={onEnglishChange}
+          placeholder="English translation"
+        />
+        {/* {!searchComplete && (
           <div>
             <button onClick={getTranslation}>Translate</button>
 
             {error && <p>{error}</p>}
           </div>
-        )}
-        {searchComplete && (
-          <div>
-            <button onClick={saveWord}>Save</button>
-            <button onClick={reset}>Cancel</button>
-          </div>
-        )}
+        )} */}
+        {/* <div>
+          <button onClick={getTranslation}>Translate</button>
+
+          {error && <p>{error}</p>}
+        </div> */}
+
+        <div>
+          <button onClick={getTranslation}>Translate</button>
+          {searchComplete && (
+            <>
+              <button onClick={saveWord}>Save</button>
+              <button onClick={reset}>Clear</button>
+            </>
+          )}
+          {error && <p>{error}</p>}
+        </div>
       </div>
       <div style={{ width: '40%' }}>
+        <p>Special Characters</p>
         <button
           style={{ padding: '1rem', margin: '.2rem .4rem' }}
           onClick={() => addSpecial('à')}
