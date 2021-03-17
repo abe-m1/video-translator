@@ -5,7 +5,7 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
   let player;
   let [currentTime, setCurrentTime] = useState(0);
   useEffect(() => {
-    console.log('video NOW', video);
+    console.log('new video', video);
     if (!window.YT) {
       // If not, load the script asynchronously
       const tag = document.createElement('script');
@@ -47,9 +47,10 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
         onStateChange: getITime,
       },
     });
-
+    console.log('player1', player);
     setInterval(() => {
       if (player) {
+        console.log(player);
         setCurrentTime(player.getCurrentTime());
         //TODO
         getTimeBeforeSave(player.getCurrentTime());
@@ -67,9 +68,7 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
   };
 
   const getITime = (e) => {
-    // console.log(e.target);
     let time = e.target.getCurrentTime();
-    // console.log('TT', e.target.getCurrentTime());
   };
 
   const getTime = () => {
@@ -89,7 +88,8 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
           height: '70vh',
         }}
       >
-        <h1 style={{ color: 'white' }}>select a video</h1>
+        <h1 style={{ color: 'white' }}>select a video from the playlist</h1>
+        <h2 style={{ color: 'white' }}>or search for a new video</h2>
       </div>
     );
   }

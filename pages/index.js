@@ -11,17 +11,17 @@ import Video from '../models/Video';
 
 const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_KEY;
 
-const Home = ({ dictionary }) => {
+const Home = ({ currentPlaylist }) => {
   const [videoList, setVideoList] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState({});
   const [currentDictionary, setCurrentDictionary] = useState({});
   const [currentTime, setCurrentTime] = useState(0);
+  const [playlist, setPlaylist] = useState([]);
   useEffect(() => {
-    setCurrentDictionary(dictionary);
+    setPlaylist(currentPlaylist);
   }, []);
 
   const onTermChange = (searchTerm) => {
-    console.log(searchTerm);
     axios
       .get('https://www.googleapis.com/youtube/v3/search', {
         params: {
@@ -32,14 +32,12 @@ const Home = ({ dictionary }) => {
         },
       })
       .then((response) => {
-        console.log(response.data.items);
         setVideoList(response.data.items);
       });
   };
 
   const onVideoSelect = async (video) => {
     const contentType = 'application/json';
-    console.log('on sleect', video);
     // setSelectedVideo(Object.assign({}, video));
     const res = await fetch('/api/video', {
       method: 'POST',
@@ -52,11 +50,38 @@ const Home = ({ dictionary }) => {
         etag: video.etag,
         videoId: video.id.videoId,
         title: video.snippet.title,
-        thumbnail: video.snippet.thumbnail.default.url,
+        thumbnail: video.snippet.thumbnails.default.url,
       }),
     });
     const { data } = await res.json();
-    console.log(data);
+
+    setCurrentDictionary(Object.assign({}, data.dictionary || {}));
+    setSelectedVideo(data);
+    setVideoList([]);
+
+    // await dbConnect();
+
+    // // const result = await Video.find({});
+    // const result = await Video.findOne({ etag: video.etag });
+    // console.log('this is result', result);
+  };
+
+  const onPlaylistSelect = async (video) => {
+    const contentType = 'application/json';
+
+    // setSelectedVideo(Object.assign({}, video));
+    const res = await fetch('/api/video', {
+      method: 'POST',
+      headers: {
+        Accept: contentType,
+        'Content-Type': contentType,
+      },
+      body: JSON.stringify({
+        // ...form,
+        etag: video.etag,
+      }),
+    });
+    const { data } = await res.json();
 
     setCurrentDictionary(Object.assign({}, data.dictionary || {}));
     setSelectedVideo(data);
@@ -69,12 +94,9 @@ const Home = ({ dictionary }) => {
   };
 
   const saveTranslation = async (french, english) => {
-    console.log('SV', selectedVideo);
     // let time = getTimeBeforeSave();
-    console.log('in root', french, english, currentTime);
     const contentType = 'application/json';
     let time = Math.floor(currentTime / 20);
-    console.log(time);
     let modified = currentDictionary;
     if (modified[time]) {
       modified[time].push({ french, english, time: currentTime });
@@ -104,7 +126,6 @@ const Home = ({ dictionary }) => {
       if (!res.ok) {
         throw new Error(res.status);
       }
-      console.log('res', res);
       // router.push('/')
     } catch (error) {
       console.log(error);
@@ -116,7 +137,10 @@ const Home = ({ dictionary }) => {
     setCurrentTime(time);
     // return time;
   };
-  console.log('rerender');
+
+  const resetSearch = () => {
+    setVideoList([]);
+  };
   return (
     <div>
       <Head>
@@ -137,8 +161,11 @@ const Home = ({ dictionary }) => {
             <VideoList
               videos={videoList}
               onVideoSelect={onVideoSelect}
+              onPlaylistSelect={onPlaylistSelect}
               dictionary={currentDictionary}
+              playlist={playlist}
               currentTime={currentTime}
+              resetSearch={resetSearch}
             />
           </div>
           <TranslationBox saveTranslation={saveTranslation} />
@@ -149,30 +176,27 @@ const Home = ({ dictionary }) => {
 };
 
 export async function getServerSideProps() {
-  // const dictionary = {
-  //   0: [
-  //     { french: 'un', english: 'one' },
-  //     { french: 'deux', english: 'deux' },
-  //   ],
-  //   1: [
-  //     { french: 'trois', english: 'three' },
-  //     { french: 'Quatre', english: 'four' },
-  //   ],
-  //   2: [{ word: 'word2' }],
-  // };
-  console.log('HERE');
+  const dictionary = {
+    0: [
+      { french: 'un', english: 'one' },
+      { french: 'deux', english: 'deux' },
+    ],
+    1: [
+      { french: 'trois', english: 'three' },
+      { french: 'Quatre', english: 'four' },
+    ],
+    2: [{ word: 'word2' }],
+  };
   await dbConnect();
 
   // const result = await Video.find({});
-  const result = await Video.findOne({ name: 'video2' });
-  console.log('this is result', result);
-  // const video = result.map((doc) => {
-  //   const video = doc.toObject();
-  //   video._id = video._id.toString();
-  //   return video.dictionary;
-  // });
-
-  return { props: { dictionary: result.dictionary } };
+  const result = await Video.find({});
+  const playlist = result.map((doc) => {
+    const video = doc.toObject();
+    video._id = video._id.toString();
+    return video;
+  });
+  return { props: { currentPlaylist: playlist } };
 }
 
 export default Home;

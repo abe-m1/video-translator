@@ -13,7 +13,6 @@ export default async function handler(req, res) {
           etag: req.body.etag,
         }); /* find all the data in our database */
 
-        console.log('find', video);
         if (video.length > 0) {
           res.status(200).json({ success: true, data: video[0] });
         }
