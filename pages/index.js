@@ -134,6 +134,7 @@ const Home = ({ currentPlaylist }) => {
   };
 
   const getTimeBeforeSave = (time) => {
+    console.log(time);
     setCurrentTime(time);
     // return time;
   };

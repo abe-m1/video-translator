@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import styles from '../styles/VideoPlayer.module.scss';
 
 export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
-  let player;
+  var player;
+  let videotime;
+  let intervalSetting;
   let [currentTime, setCurrentTime] = useState(0);
+  let [loadFirst, setLoadFirst] = useState(false);
   useEffect(() => {
-    console.log('new video', video);
     if (!window.YT) {
       // If not, load the script asynchronously
       const tag = document.createElement('script');
@@ -16,66 +18,58 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
 
       const firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    } else {
+    } else if (!loadFirst) {
+      setLoadFirst(true);
       // If script is already there, load the video directly
       loadVideo();
+    } else {
+      loadNext();
     }
   }, [video]);
 
-  useEffect(() => {
-    console.log(dictionary);
-  }, [dictionary]);
+  useEffect(() => {}, [dictionary]);
 
-  const loadVideo = () => {
+  function loadVideo() {
     if (!video.videoId) {
       return;
     }
-    // the Player object is created uniquely based on the id in props
-    // let videoId;
-    // if (!video.videoId) {
-    //   videoId = 'MaFU5Wc-evM';
-    // } else {
-    //   videoId = video.id.videoId;
-    // }
-    player = new window.YT.Player(`youtube-player`, {
-      // videoId: video.id.videoId,
-      // videoId: 'MaFU5Wc-evM',
 
+    player = new window.YT.Player(`youtube-player`, {
       videoId: video.videoId,
       events: {
         onReady: onPlayerReady,
         onStateChange: getITime,
       },
     });
-    console.log('player1', player);
-    setInterval(() => {
-      if (player) {
-        console.log(player);
-        setCurrentTime(player.getCurrentTime());
-        //TODO
-        getTimeBeforeSave(player.getCurrentTime());
+  }
+
+  async function loadNext() {
+    player = YT.get('youtube-player');
+    await player.loadVideoById({ videoId: video.videoId });
+  }
+
+  function onPlayerReady(event) {
+    let oldTime;
+
+    intervalSetting = setInterval(() => {
+      if (event && event.target.getCurrentTime) {
+        let time = event.target.getCurrentTime();
+
+        if (oldTime != time) {
+          oldTime = time;
+          getTimeBeforeSave(time);
+        }
       }
     }, 5000);
-  };
+  }
 
-  const onPlayerReady = (event) => {
-    event.target.playVideo();
-  };
-
-  const onVideoSelect = (video) => {
-    // this.$emit("videoSelect", video);
-    console.log('video', video);
-  };
-
-  const getITime = (e) => {
-    let time = e.target.getCurrentTime();
-  };
+  function getITime(e) {
+    console.log(e);
+  }
 
   const getTime = () => {
     console.log(player.getCurrentTime());
   };
-
-  const positionIndicator = Math.floor(currentTime / 20);
 
   if (!video.videoId) {
     return (
@@ -102,10 +96,6 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
         margin: 'auto',
       }}
     >
-      {/* <iframe
-          class="embed-responsive-item"
-          src={`https://www.youtube.com/embed/${video.id.videoId}`}
-        /> */}
       <div id={`youtube-player`} />
     </div>
   );
