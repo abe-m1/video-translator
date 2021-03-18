@@ -154,13 +154,16 @@ const Home = ({ currentPlaylist }) => {
       <main>
         <div className="container">
           <SearchBar onTermChange={onTermChange} onSubmit={onSubmit} />
-          <div className={styles.row}>
-            <VideoPlayer
-              video={selectedVideo}
-              getTimeBeforeSave={getTimeBeforeSave}
-              dictionary={currentDictionary}
-            />
+          <div style={{ display: 'flex' }}>
+            <div className={styles.row}>
+              <VideoPlayer
+                video={selectedVideo}
+                getTimeBeforeSave={getTimeBeforeSave}
+                dictionary={currentDictionary}
+              />
 
+              <TranslationBox saveTranslation={saveTranslation} />
+            </div>
             <VideoList
               videos={videoList}
               onVideoSelect={onVideoSelect}
@@ -171,7 +174,6 @@ const Home = ({ currentPlaylist }) => {
               resetSearch={resetSearch}
             />
           </div>
-          <TranslationBox saveTranslation={saveTranslation} />
         </div>
       </main>
     </div>

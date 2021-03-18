@@ -71,86 +71,92 @@ export default function VideoList({
   };
 
   return (
-    <div class={styles.container}>
-      {videos.length > 0 && (
-        <div>
-          <div className={styles.searchBox}>
-            <a onClick={() => reset()}>Back</a>
-            <a>Search Results</a>
-            {/* <a onClick={() => setShowVideoList(false)}>Translations</a> */}
+    <>
+      {/* <div className={styles.searchBox}>
+        <a onClick={() => reset()}>Back</a>
+        <a>Search Results</a>
+      </div> */}
+      <div class={styles.container}>
+        {videos.length > 0 && (
+          <div>
+            <div className={styles.searchBox}>
+              <a onClick={() => reset()}>Back</a>
+              <a>Search Results</a>
+              {/* <a onClick={() => setShowVideoList(false)}>Translations</a> */}
+            </div>
+            <ul>{videoItems}</ul>
           </div>
-          <ul>{videoItems}</ul>
-        </div>
-      )}
-      {!videos.length && (
-        <>
-          <div className={styles.selectorBox}>
-            <a
-              style={{ backgroundColor: showVideoList ? 'skyblue' : '' }}
-              onClick={() => setShowVideoList(true)}
-            >
-              Playlist
-            </a>
-            <a
-              style={{ backgroundColor: showVideoList ? '' : 'skyblue' }}
-              onClick={() => setShowVideoList(false)}
-            >
-              Translations
-            </a>
-          </div>
+        )}
+        {!videos.length && (
+          <>
+            <div className={styles.selectorBox}>
+              <a
+                style={{ backgroundColor: showVideoList ? 'skyblue' : '' }}
+                onClick={() => setShowVideoList(true)}
+              >
+                Playlist
+              </a>
+              <a
+                style={{ backgroundColor: showVideoList ? '' : 'skyblue' }}
+                onClick={() => setShowVideoList(false)}
+              >
+                Translations
+              </a>
+            </div>
 
-          {/* <ul>{videoItems}</ul> */}
+            {/* <ul>{videoItems}</ul> */}
 
-          <div class="details">
-            {/* <button onClick={getTime}>GET TIME</button>
+            <div class="details">
+              {/* <button onClick={getTime}>GET TIME</button>
         {currentTime} */}
-            {showVideoList && <ul>{playlistItems}</ul>}
-            {/* <p>{positionIndicator}</p>
+              {showVideoList && <ul>{playlistItems}</ul>}
+              {/* <p>{positionIndicator}</p>
         <p>{currentTime}</p> */}
-            {!showVideoList && (
-              <ul style={{ padding: 0 }}>
-                {dictionary[positionIndicator] &&
-                  dictionary[positionIndicator].map((word, i) => {
-                    return (
-                      <li key={i} style={{ display: 'flex' }}>
-                        <p className={styles.time}>
-                          {formatTime(Math.round(word.time))}
-                        </p>
-                        <div>
-                          <p
-                            style={{
-                              padding: '1rem',
-                              color: 'skyblue',
-                              fontSize: '18px',
-                              fontWeight: '700',
-                              margin: 0,
-                              paddingBottom: 0,
-                            }}
-                          >
-                            {word.french}
+              {!showVideoList && (
+                <ul style={{ padding: 0 }}>
+                  {dictionary[positionIndicator] &&
+                    dictionary[positionIndicator].map((word, i) => {
+                      return (
+                        <li key={i} style={{ display: 'flex' }}>
+                          <p className={styles.time}>
+                            {formatTime(Math.round(word.time))}
                           </p>
-                          <p
-                            style={{
-                              padding: '1rem',
-                              color: 'lightgray',
-                              margin: 0,
-                              paddingTop: '5px',
-                            }}
-                          >
-                            {word.english}
-                          </p>
-                        </div>
-                      </li>
-                    );
-                  })}
-              </ul>
-            )}
+                          <div>
+                            <p
+                              style={{
+                                padding: '1rem',
+                                color: 'skyblue',
+                                fontSize: '18px',
+                                fontWeight: '700',
+                                margin: 0,
+                                paddingBottom: 0,
+                              }}
+                            >
+                              {word.french}
+                            </p>
+                            <p
+                              style={{
+                                padding: '1rem',
+                                color: 'lightgray',
+                                margin: 0,
+                                paddingTop: '5px',
+                              }}
+                            >
+                              {word.english}
+                            </p>
+                          </div>
+                        </li>
+                      );
+                    })}
+                </ul>
+              )}
 
-            {/* <h4>{video.snippet.title}</h4>
+              {/* <h4>{video.snippet.title}</h4>
         <p>{video.snippet.description}</p> */}
-          </div>
-        </>
-      )}
-    </div>
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 }

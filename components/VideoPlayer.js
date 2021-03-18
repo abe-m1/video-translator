@@ -77,8 +77,8 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
         style={{
           padding: '20px',
           backgroundColor: 'black',
-          flex: '70%',
-          margin: 'auto',
+          // flex: '70%',
+          // margin: 'auto',
           height: '60vh',
           textAlign: 'center',
         }}
@@ -94,7 +94,7 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
         padding: '20px',
         textAlign: 'center',
         backgroundColor: 'black',
-        flex: '70%',
+        // flex: '70%',
         margin: 0,
         height: '60vh',
       }}
