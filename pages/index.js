@@ -21,7 +21,9 @@ const Home = ({ currentPlaylist }) => {
     setPlaylist(currentPlaylist);
   }, []);
 
-  const onTermChange = (searchTerm) => {
+  const onTermChange = (searchTerm) => {};
+
+  const onSubmit = (searchTerm) => {
     axios
       .get('https://www.googleapis.com/youtube/v3/search', {
         params: {
@@ -151,7 +153,7 @@ const Home = ({ currentPlaylist }) => {
 
       <main>
         <div className="container">
-          <SearchBar onTermChange={onTermChange} />
+          <SearchBar onTermChange={onTermChange} onSubmit={onSubmit} />
           <div className={styles.row}>
             <VideoPlayer
               video={selectedVideo}

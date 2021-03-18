@@ -95,7 +95,7 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
         textAlign: 'center',
         backgroundColor: 'black',
         flex: '70%',
-        margin: 'auto',
+        margin: 0,
         height: '60vh',
       }}
     >
