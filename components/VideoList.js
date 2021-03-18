@@ -74,8 +74,9 @@ export default function VideoList({
     <div class={styles.container}>
       {videos.length > 0 && (
         <div>
-          <div className={styles.selectorBox}>
-            <a onClick={() => reset()}>Back to Playlist</a>
+          <div className={styles.searchBox}>
+            <a onClick={() => reset()}>Back</a>
+            <a>Search Results</a>
             {/* <a onClick={() => setShowVideoList(false)}>Translations</a> */}
           </div>
           <ul>{videoItems}</ul>

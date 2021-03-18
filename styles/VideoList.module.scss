@@ -24,4 +24,17 @@
   background-color: grey;
 }
 
+.searchBox {
+  display: flex;
+}
+
+.searchBox a {
+  color: white;
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  cursor: pointer;
+  background-color: grey;
+}
+
 

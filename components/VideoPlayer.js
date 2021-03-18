@@ -79,7 +79,8 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
           backgroundColor: 'black',
           flex: '70%',
           margin: 'auto',
-          height: '70vh',
+          height: '60vh',
+          textAlign: 'center',
         }}
       >
         <h1 style={{ color: 'white' }}>select a video from the playlist</h1>
@@ -91,9 +92,11 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
     <div
       style={{
         padding: '20px',
+        textAlign: 'center',
         backgroundColor: 'black',
         flex: '70%',
         margin: 'auto',
+        height: '60vh',
       }}
     >
       <div id={`youtube-player`} />
