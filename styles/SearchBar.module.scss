@@ -1,9 +1,19 @@
 .input {
-  width: 75%;
+  width: 50%;
+  padding: .5rem;
+  border: none;
 }
 
 .wrapper {
-  text-align: center;
+  text-align: left;
   padding: 20px;
   background-color: #3a3b3c;
+}
+
+.searchButton {
+  padding: .5rem 2rem;
+  background-color: skyblue;
+  border: none;
+  color: white;
+  cursor: pointer;
 }

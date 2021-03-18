@@ -10,7 +10,13 @@ export default function SearchBar({ onTermChange, onSubmit }) {
         className={styles.input}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <button onClick={() => onSubmit(searchTerm)}> Search</button>
+      <button
+        className={styles.searchButton}
+        onClick={() => onSubmit(searchTerm)}
+      >
+        {' '}
+        Search
+      </button>
     </div>
   );
 }

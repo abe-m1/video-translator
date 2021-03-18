@@ -113,7 +113,6 @@ export default function TranslationBox({ saveTranslation }) {
         </div>
       </div>
       <div style={{ width: '40%' }}>
-        <p>Special Characters</p>
         <button
           style={{ padding: '1rem', margin: '.2rem .4rem' }}
           onClick={() => addSpecial('à')}
