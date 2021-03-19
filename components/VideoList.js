@@ -14,10 +14,6 @@ export default function VideoList({
   dictionary,
 }) {
   const [showVideoList, setShowVideoList] = useState(true);
-  // const onVideoSelect = (video) => {
-  //   // this.$emit("videoSelect", video);
-  //   console.log('video', video);
-  // };
   const positionIndicator = Math.floor(currentTime / 20);
 
   let videoItems =
@@ -72,17 +68,12 @@ export default function VideoList({
 
   return (
     <>
-      {/* <div className={styles.searchBox}>
-        <a onClick={() => reset()}>Back</a>
-        <a>Search Results</a>
-      </div> */}
       <div class={styles.container}>
         {videos.length > 0 && (
           <div>
             <div className={styles.searchBox}>
               <a onClick={() => reset()}>Back</a>
               <a>Search Results</a>
-              {/* <a onClick={() => setShowVideoList(false)}>Translations</a> */}
             </div>
             <ul>{videoItems}</ul>
           </div>
@@ -104,14 +95,9 @@ export default function VideoList({
               </a>
             </div>
 
-            {/* <ul>{videoItems}</ul> */}
-
             <div class="details">
-              {/* <button onClick={getTime}>GET TIME</button>
-        {currentTime} */}
               {showVideoList && <ul>{playlistItems}</ul>}
-              {/* <p>{positionIndicator}</p>
-        <p>{currentTime}</p> */}
+
               {!showVideoList && (
                 <ul style={{ padding: 0 }}>
                   {dictionary[positionIndicator] &&
@@ -150,9 +136,6 @@ export default function VideoList({
                     })}
                 </ul>
               )}
-
-              {/* <h4>{video.snippet.title}</h4>
-        <p>{video.snippet.description}</p> */}
             </div>
           </>
         )}

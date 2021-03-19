@@ -1,20 +1,12 @@
-import styles from '../styles/VideoListItem.module.scss';
+import styles from '../styles/PlayListItem.module.scss';
 export default function VideoListItem({ video, onVideoSelect }) {
   const videoTitle = String(video.title).replace(/&#39;/gi, "'");
 
   return (
     <>
-      <li
-        onClick={() => onVideoSelect(video)}
-        style={{ listStyle: 'none', display: 'flex' }}
-      >
-        <img class="mr-3" src={video.thumbnail} />
-        <div
-          class="media-body"
-          style={{ color: 'lightblue', fontSize: '13px', padding: '10px' }}
-        >
-          {videoTitle}
-        </div>
+      <li onClick={() => onVideoSelect(video)} className={styles.listContainer}>
+        <img src={video.thumbnail} />
+        <div className={styles.videoTitle}>{videoTitle}</div>
       </li>
     </>
   );

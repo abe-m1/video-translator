@@ -1,28 +1,27 @@
-// import styles from '../styles/VideoList.module.scss';
+import styles from '../styles/TranslationBox.module.scss';
 import { useState, useRef } from 'react';
 
 const Reverso = require('reverso-api');
 const reverso = new Reverso();
-var accentArray = [
-  'á',
-  'à',
-  'ã',
-  'â',
-  'é',
-  'è',
-  'ê',
-  'í',
-  'ì',
-  'î',
-  'õ',
-  'ó',
-  'ò',
-  'ô',
-  'ú',
-  'ù',
-  'û',
-];
-var originalText = 'éçàèñ';
+// var accentArray = [
+//   'á',
+//   'à',
+//   'ã',
+//   'â',
+//   'é',
+//   'è',
+//   'ê',
+//   'í',
+//   'ì',
+//   'î',
+//   'õ',
+//   'ó',
+//   'ò',
+//   'ô',
+//   'ú',
+//   'ù',
+//   'û',
+// ];
 
 export default function TranslationBox({ saveTranslation }) {
   let [searchComplete, setSearchComplete] = useState(false);
@@ -30,9 +29,11 @@ export default function TranslationBox({ saveTranslation }) {
   let [english, setEnglish] = useState('');
   let [error, setError] = useState('');
   let inputRef = useRef(null);
+
   const onChange = (e) => {
     setFrench(e.target.value);
   };
+
   const addSpecial = (char) => {
     inputRef.current.focus();
     setFrench(french + char);
@@ -64,42 +65,22 @@ export default function TranslationBox({ saveTranslation }) {
     setSearchComplete(false);
   };
   return (
-    <div
-      style={{
-        padding: '2rem',
-        backgroundColor: '#696969',
-        display: 'flex',
-        justifyContent: 'space-around',
-      }}
-    >
+    <div className={styles.container}>
       <div>
-        {/* <p>Translation box</p> */}
         <textarea
-          style={{ width: '200px', height: '136px' }}
+          className={styles.inputBox}
           value={french}
           onChange={onChange}
           ref={inputRef}
           placeholder="Type in a word or phrase in french"
         />
-        {/* {english && <textarea value={english} onChange={onEnglishChange} />} */}
+
         <textarea
-          style={{ width: '200px', height: '136px' }}
+          className={styles.inputBox}
           value={english}
           onChange={onEnglishChange}
           placeholder="English translation"
         />
-        {/* {!searchComplete && (
-          <div>
-            <button onClick={getTranslation}>Translate</button>
-
-            {error && <p>{error}</p>}
-          </div>
-        )} */}
-        {/* <div>
-          <button onClick={getTranslation}>Translate</button>
-
-          {error && <p>{error}</p>}
-        </div> */}
 
         <div>
           <button onClick={getTranslation}>Translate</button>
@@ -112,58 +93,58 @@ export default function TranslationBox({ saveTranslation }) {
           {error && <p>{error}</p>}
         </div>
       </div>
-      <div style={{ width: '40%' }}>
+      <div className={styles.specialCharacterContainer}>
         <button
-          style={{ padding: '1rem', margin: '.2rem .4rem' }}
+          className={styles.characterButton}
           onClick={() => addSpecial('à')}
         >
           à
         </button>
         <button
-          style={{ padding: '1rem', margin: '.2rem .4rem' }}
+          className={styles.characterButton}
           onClick={() => addSpecial('è')}
         >
           è
         </button>
         <button
-          style={{ padding: '1rem', margin: '.2rem .4rem' }}
+          className={styles.characterButton}
           onClick={() => addSpecial('é')}
         >
           é
         </button>
 
         <button
-          style={{ padding: '1rem', margin: '.2rem .4rem' }}
+          className={styles.characterButton}
           onClick={() => addSpecial('ç')}
         >
           ç
         </button>
         <button
-          style={{ padding: '1rem', margin: '.2rem .4rem' }}
+          className={styles.characterButton}
           onClick={() => addSpecial('ô')}
         >
           ô
         </button>
         <button
-          style={{ padding: '1rem', margin: '.2rem .4rem' }}
+          className={styles.characterButton}
           onClick={() => addSpecial('ê')}
         >
           ê
         </button>
         <button
-          style={{ padding: '1rem', margin: '.2rem .4rem' }}
+          className={styles.characterButton}
           onClick={() => addSpecial('ï')}
         >
           ï
         </button>
         <button
-          style={{ padding: '1rem', margin: '.2rem .4rem' }}
+          className={styles.characterButton}
           onClick={() => addSpecial('ù')}
         >
           ù
         </button>
         <button
-          style={{ padding: '1rem', margin: '.2rem .4rem' }}
+          className={styles.characterButton}
           onClick={() => addSpecial('ë')}
         >
           ë

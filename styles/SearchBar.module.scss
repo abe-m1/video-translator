@@ -5,9 +5,14 @@
 }
 
 .wrapper {
-  text-align: left;
+  display: flex;
+  justify-content: space-around;
   padding: 20px;
   background-color: #3a3b3c;
+}
+
+.searchContainer {
+  flex: 60%;
 }
 
 .searchButton {

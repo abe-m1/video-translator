@@ -1,0 +1,20 @@
+.container {
+    padding: 2rem;
+    background-color: #696969;
+    display: flex;
+    justify-content: space-around;
+}
+
+.inputBox {
+  width: 200px;
+  height: 136px;
+}
+
+.specialCharacterContainer {
+  width: 40%;
+}
+
+.characterButton {
+  padding: 1rem; 
+  margin: .2rem .4rem;
+}
