@@ -156,7 +156,7 @@ const Home = ({ currentPlaylist }) => {
             )}
             {quizMode && (
               <>
-                <Quiz />
+                <Quiz dictionary={currentDictionary} />
                 <TranslationBox saveTranslation={saveTranslation} />
               </>
             )}
