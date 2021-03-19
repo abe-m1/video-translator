@@ -81,6 +81,7 @@ const Home = ({ currentPlaylist }) => {
     setCount(wordCount);
     setCurrentDictionary(Object.assign({}, data.dictionary || {}));
     setSelectedVideo(data);
+    setQuizMode(false);
   };
 
   const saveTranslation = async (french, english) => {
