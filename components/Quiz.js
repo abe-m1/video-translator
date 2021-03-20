@@ -6,8 +6,24 @@ export default function Quiz({ dictionary }) {
   const [score, setScore] = useState(0);
   const [questionsList, setQuestionsList] = useState([]);
 
-  function randomInteger(min, max) {
+  function randomInteger(min, max, i) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function randomIntegers(min, max, i) {
+    let rand = null; //an integer
+    let indexArray = [];
+    while (
+      (rand === null || rand === i || indexArray.includes(rand),
+      indexArray.length < 3)
+    ) {
+      rand = Math.floor(Math.random() * (max - min + 1)) + min;
+
+      if (rand !== i && !indexArray.includes(rand)) {
+        indexArray.push(rand);
+      }
+    }
+    return indexArray;
   }
 
   const handleAnswerOptionClick = (isCorrect) => {
@@ -27,22 +43,36 @@ export default function Quiz({ dictionary }) {
     let questionsArray = [];
     Object.values(dictionary).forEach((line) => questionsArray.push(...line));
     let questionAnswer = [];
-    console.log(questionsArray);
 
     for (let i = 0; i < questionsArray.length; i++) {
-      let randomInteger = Math.floor(Math.random() * 4);
+      let randomInteger1 = Math.floor(Math.random() * 4);
+      let [one, two, three] = randomIntegers(0, questionsArray.length - 1, i);
+
       let answerArray = [
-        { answerText: questionsArray[i].english, isCorrect: true },
-        // { answerText: questionsArray[i - 1].english, isCorrect: false },
-        // { answerText: questionsArray[i - 2].english, isCorrect: false },
-        // { answerText: questionsArray[i + 1].english, isCorrect: false },
+        {
+          answerText: questionsArray[one].english,
+          isCorrect: false,
+        },
+        {
+          answerText: questionsArray[two].english,
+          isCorrect: false,
+        },
+        {
+          answerText: questionsArray[three].english,
+          isCorrect: false,
+        },
       ];
+      answerArray.splice(randomInteger1, 0, {
+        answerText: questionsArray[i].english,
+        isCorrect: true,
+      });
+
       questionAnswer.push({
         questionText: questionsArray[i].french,
         answerOptions: answerArray,
       });
     }
-    console.log(questionAnswer);
+
     setQuestionsList(questionAnswer);
   };
 
@@ -63,22 +93,24 @@ export default function Quiz({ dictionary }) {
                 {questionsList.length}
               </div>
               <div className={styles.questionText}>
-                {questionsList[currentQuestion].questionText}
+                {questionsList[currentQuestion] &&
+                  questionsList[currentQuestion].questionText}
               </div>
             </div>
             <div className={styles.answerSection}>
-              {questionsList[currentQuestion].answerOptions.map(
-                (answerOption) => (
-                  <button
-                    className={styles.button}
-                    onClick={() =>
-                      handleAnswerOptionClick(answerOption.isCorrect)
-                    }
-                  >
-                    {answerOption.answerText}
-                  </button>
-                )
-              )}
+              {questionsList[currentQuestion] &&
+                questionsList[currentQuestion].answerOptions.map(
+                  (answerOption) => (
+                    <button
+                      className={styles.button}
+                      onClick={() =>
+                        handleAnswerOptionClick(answerOption.isCorrect)
+                      }
+                    >
+                      {answerOption.answerText}
+                    </button>
+                  )
+                )}
             </div>
           </>
         )}
