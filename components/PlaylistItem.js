@@ -1,5 +1,9 @@
 import styles from '../styles/PlayListItem.module.scss';
-export default function VideoListItem({ video, onVideoSelect }) {
+export default function VideoListItem({
+  video,
+  onVideoSelect,
+  deletePlaylist,
+}) {
   const videoTitle = String(video.title).replace(/&#39;/gi, "'");
 
   return (
@@ -8,7 +12,7 @@ export default function VideoListItem({ video, onVideoSelect }) {
         <img src={video.thumbnail} />
         <div className={styles.videoTitle}>{videoTitle}</div>
       </li>
-      <a onClick={() => console.log('clicked')} className={styles.delete}>
+      <a onClick={() => deletePlaylist(video)} className={styles.delete}>
         Del
       </a>
     </div>

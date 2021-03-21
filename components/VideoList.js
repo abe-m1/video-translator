@@ -12,6 +12,7 @@ export default function VideoList({
   resetSearch,
   playlist,
   dictionary,
+  deletePlaylist,
 }) {
   const [showVideoList, setShowVideoList] = useState(true);
   const positionIndicator = Math.floor(currentTime / 20);
@@ -33,6 +34,7 @@ export default function VideoList({
       return (
         <PlaylistItem
           video={video}
+          deletePlaylist={deletePlaylist}
           onVideoSelect={() => onPlaylistSelect1(video)}
         />
       );

@@ -1,5 +1,6 @@
 import styles from '../styles/Quiz.module.scss';
 import { useState, useEffect } from 'react';
+
 export default function Quiz({ dictionary }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);

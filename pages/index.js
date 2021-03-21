@@ -9,6 +9,7 @@ import TranslationBox from '../components/TranslationBox';
 import dbConnect from '../utils/dbConnect';
 import Video from '../models/Video';
 import Quiz from '../components/Quiz';
+import Modal from '../components/Modal';
 
 const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_KEY;
 const contentType = 'application/json';
@@ -21,6 +22,7 @@ const Home = ({ currentPlaylist }) => {
   const [playlist, setPlaylist] = useState([]);
   const [count, setCount] = useState(0);
   const [quizMode, setQuizMode] = useState(false);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     setPlaylist(currentPlaylist);
@@ -135,6 +137,11 @@ const Home = ({ currentPlaylist }) => {
     setQuizMode(true);
   };
 
+  const deletePlaylist = (video) => {
+    console.log('delete', video);
+    setModal(true);
+  };
+
   return (
     <div>
       <Head>
@@ -172,9 +179,11 @@ const Home = ({ currentPlaylist }) => {
             playlist={playlist}
             currentTime={currentTime}
             resetSearch={resetSearch}
+            deletePlaylist={deletePlaylist}
           />
         </div>
       </main>
+      <Modal showModal={modal} />
     </div>
   );
 };
