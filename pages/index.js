@@ -75,10 +75,13 @@ const Home = ({ currentPlaylist }) => {
     });
     const { data } = await res.json();
     let wordCount = 0;
-    Object.values(data.dictionary).forEach(
-      (line) => (wordCount += line.length)
-    );
-    setCount(wordCount);
+    if (data.dictionary) {
+      Object.values(data.dictionary).forEach(
+        (line) => (wordCount += line.length)
+      );
+      setCount(wordCount);
+    }
+
     setCurrentDictionary(Object.assign({}, data.dictionary || {}));
     setSelectedVideo(data);
     setQuizMode(false);

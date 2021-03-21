@@ -57,7 +57,7 @@ export default function Quiz({ dictionary }) {
 
       //generate 3 random index numbers
       let [one, two, three] = randomIntegers(0, questionsArray.length - 1, i);
-
+      console.log(one, two, three);
       //create answer array with three false answers, use random index to
       //determine answers
       let answerArray = [
@@ -86,7 +86,7 @@ export default function Quiz({ dictionary }) {
         answerOptions: answerArray,
       });
     }
-
+    console.log(questionAnswer);
     setQuestionsList(questionAnswer);
   };
 

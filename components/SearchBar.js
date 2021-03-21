@@ -7,7 +7,7 @@ export default function SearchBar({ onSubmit, wordCount, takeQuiz }) {
     <div className={styles.wrapper}>
       <div className={styles.searchContainer}>
         <input
-          placeholder="Search YouTube for videos"
+          placeholder="Search YouTube for videos in French"
           className={styles.input}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
