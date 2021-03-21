@@ -13,14 +13,14 @@
   flex-direction: column;
 }
 
-.modal-header {
+.modalHeader {
   border-bottom: 1px solid rgb(192, 192, 192);
   padding: 10px;
   position: relative;
   background-color: white;
 }
 
-.modal-close {
+.modalClose {
   position: absolute;
   right: 6%;
   font-weight: bold;
@@ -40,7 +40,7 @@
   background-color: rgba(0, 0, 0, 0.2); /* Black w/ opacity */
 }
 
-.modal-header {
+.modalHeader {
   background-color: #fafafa;
   order: -1;
   padding: 1rem;
@@ -48,12 +48,12 @@
   border-top-right-radius: 8px;
 }
 
-.modal-body {
+.modalBody {
   padding: 1rem 1.5rem 1.5rem 1.5rem;
   background-color: rgb(248, 248, 248);
 }
 
-.modal-footer {
+.modalFooter {
   background-color: #fafafa;
   border-top: 1px solid #d3d3d3;
   order: 100;

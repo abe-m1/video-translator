@@ -9,7 +9,7 @@ import TranslationBox from '../components/TranslationBox';
 import dbConnect from '../utils/dbConnect';
 import Video from '../models/Video';
 import Quiz from '../components/Quiz';
-import Modal from '../components/Modal';
+import Modal from '../components/DeleteModal';
 
 const API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_KEY;
 const contentType = 'application/json';
@@ -141,6 +141,13 @@ const Home = ({ currentPlaylist }) => {
     console.log('delete', video);
     setModal(true);
   };
+  const cancelDelete = () => {
+    setModal(false);
+  };
+  const confirmDelete = () => {
+    console.log('confirm delete');
+    setModal(false);
+  };
 
   return (
     <div>
@@ -183,7 +190,11 @@ const Home = ({ currentPlaylist }) => {
           />
         </div>
       </main>
-      <Modal showModal={modal} />
+      <Modal
+        showModal={modal}
+        confirmDelete={confirmDelete}
+        cancelDelete={cancelDelete}
+      />
     </div>
   );
 };
