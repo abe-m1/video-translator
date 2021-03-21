@@ -23,6 +23,7 @@ const Home = ({ currentPlaylist }) => {
   const [count, setCount] = useState(0);
   const [quizMode, setQuizMode] = useState(false);
   const [modal, setModal] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState({});
 
   useEffect(() => {
     setPlaylist(currentPlaylist);
@@ -139,13 +140,41 @@ const Home = ({ currentPlaylist }) => {
 
   const deletePlaylist = (video) => {
     console.log('delete', video);
+    setPendingDelete(video);
     setModal(true);
   };
   const cancelDelete = () => {
     setModal(false);
   };
-  const confirmDelete = () => {
+
+  const confirmDelete = async () => {
+    let videoRef = pendingDelete._id;
     console.log('confirm delete');
+    //save to db
+    try {
+      const res = await fetch('/api/video', {
+        method: 'DELETE',
+        headers: {
+          Accept: contentType,
+          'Content-Type': contentType,
+        },
+        body: JSON.stringify({
+          _id: pendingDelete._id,
+        }),
+      });
+
+      // Throw error with status code in case Fetch API req failed
+      if (!res.ok) {
+        throw new Error(res.status);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    let updatedPlaylist = playlist.filter(
+      (element) => element._id !== videoRef
+    );
+    setPlaylist(updatedPlaylist);
+    setPendingDelete({});
     setModal(false);
   };
 
@@ -194,6 +223,7 @@ const Home = ({ currentPlaylist }) => {
         showModal={modal}
         confirmDelete={confirmDelete}
         cancelDelete={cancelDelete}
+        pendingDelete={pendingDelete}
       />
     </div>
   );

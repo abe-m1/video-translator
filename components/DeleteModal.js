@@ -4,16 +4,15 @@ export default function DeleteModal({
   showModal,
   confirmDelete,
   cancelDelete,
+  pendingDelete,
 }) {
   return (
     <Modal open={showModal} onClose={() => cancelDelete()}>
       <ModalHeader text="Do you want to continue?" />
       <ModalBody>
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae rerum
-          consequatur accusamus fuga iure laudantium, inventore aliquam animi
-          facilis soluta, exercitationem nihil quasi blanditiis ex aut error
-          placeat dolorum voluptate.
+          Are you sure you want to delete the video: {pendingDelete.title}. Any
+          saved Translations will also be deleted?
         </p>
       </ModalBody>
       <ModalFooter>
