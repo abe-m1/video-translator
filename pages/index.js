@@ -100,6 +100,7 @@ const Home = ({ currentPlaylist }) => {
       modified[time].push({ french, english, time: currentTime });
     }
     setCurrentDictionary(Object.assign({}, modified));
+    setCount(count + 1);
 
     //save to db
     try {

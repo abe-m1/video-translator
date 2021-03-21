@@ -49,6 +49,8 @@ export default function VideoPlayer({ video, getTimeBeforeSave, dictionary }) {
   }
 
   function onPlayerReady(event) {
+    event.target.playVideo();
+
     let oldTime;
 
     intervalSetting = setInterval(() => {
