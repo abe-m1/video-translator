@@ -59,7 +59,7 @@ const Home = ({ currentPlaylist }) => {
       }),
     });
     const { data } = await res.json();
-
+    setPlaylist([...playlist, data]);
     setCurrentDictionary(Object.assign({}, data.dictionary || {}));
     setSelectedVideo(data);
     setVideoList([]);
