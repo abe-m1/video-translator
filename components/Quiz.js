@@ -6,6 +6,7 @@ export default function Quiz({ dictionary }) {
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
   const [questionsList, setQuestionsList] = useState([]);
+  const [quizStarted, setQuizStarted] = useState(false);
 
   function randomIntegers(min, max, i) {
     let rand = null;
@@ -89,45 +90,54 @@ export default function Quiz({ dictionary }) {
     }
     console.log(questionAnswer);
     setQuestionsList(questionAnswer);
+    setQuizStarted(true);
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <button onClick={startQuiz}>Click</button>
-        {questionsList.length}
-        {showScore ? (
-          <div className={styles.scoreSection}>
-            You scored {score} out of {questionsList.length}
+        {!quizStarted && (
+          <div>
+            <button onClick={startQuiz}>Click to start quiz</button>
+            {/* {questionsList.length} */}
           </div>
-        ) : (
-          <>
-            <div className={styles.questionSection}>
-              <div className={styles.questionCount}>
-                <span>Question {currentQuestion + 1}</span>/
-                {questionsList.length}
+        )}
+        {quizStarted && (
+          <div className={styles.quizContent}>
+            {showScore ? (
+              <div className={styles.scoreSection}>
+                You scored {score} out of {questionsList.length}
               </div>
-              <div className={styles.questionText}>
-                {questionsList[currentQuestion] &&
-                  questionsList[currentQuestion].questionText}
-              </div>
-            </div>
-            <div className={styles.answerSection}>
-              {questionsList[currentQuestion] &&
-                questionsList[currentQuestion].answerOptions.map(
-                  (answerOption) => (
-                    <button
-                      className={styles.button}
-                      onClick={() =>
-                        handleAnswerOptionClick(answerOption.isCorrect)
-                      }
-                    >
-                      {answerOption.answerText}
-                    </button>
-                  )
-                )}
-            </div>
-          </>
+            ) : (
+              <>
+                <div className={styles.questionSection}>
+                  <div className={styles.questionCount}>
+                    <span>Question {currentQuestion + 1}</span>/
+                    {questionsList.length}
+                  </div>
+                  <div className={styles.questionText}>
+                    {questionsList[currentQuestion] &&
+                      questionsList[currentQuestion].questionText}
+                  </div>
+                </div>
+                <div className={styles.answerSection}>
+                  {questionsList[currentQuestion] &&
+                    questionsList[currentQuestion].answerOptions.map(
+                      (answerOption) => (
+                        <button
+                          className={styles.button}
+                          onClick={() =>
+                            handleAnswerOptionClick(answerOption.isCorrect)
+                          }
+                        >
+                          {answerOption.answerText}
+                        </button>
+                      )
+                    )}
+                </div>
+              </>
+            )}
+          </div>
         )}
       </div>
     </div>

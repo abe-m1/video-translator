@@ -187,7 +187,12 @@ const Home = ({ currentPlaylist }) => {
       </Head>
 
       <main>
-        <SearchBar onSubmit={onSubmit} wordCount={count} takeQuiz={takeQuiz} />
+        <SearchBar
+          onSubmit={onSubmit}
+          wordCount={count}
+          video={selectedVideo}
+          takeQuiz={takeQuiz}
+        />
         <div className={styles.container}>
           <div className={styles.row}>
             {!quizMode && (

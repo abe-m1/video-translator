@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from '../styles/SearchBar.module.scss';
 
-export default function SearchBar({ onSubmit, wordCount, takeQuiz }) {
+export default function SearchBar({ onSubmit, wordCount, takeQuiz, video }) {
   const [searchTerm, setSearchTerm] = useState('');
   return (
     <div className={styles.wrapper}>
@@ -19,8 +19,14 @@ export default function SearchBar({ onSubmit, wordCount, takeQuiz }) {
           Search
         </button>
       </div>
+
       <div>
-        Right Side {wordCount} <button onClick={takeQuiz}>Take Quiz</button>{' '}
+        {video._id && (
+          <div>
+            Word Count: {wordCount}{' '}
+            {wordCount > 6 && <button onClick={takeQuiz}>Take Quiz</button>}
+          </div>
+        )}
       </div>
     </div>
   );

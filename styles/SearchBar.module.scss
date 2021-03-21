@@ -1,6 +1,6 @@
 .input {
   width: 50%;
-  padding: .5rem;
+  padding: 0.5rem;
   border: none;
 }
 
@@ -9,6 +9,7 @@
   justify-content: space-around;
   padding: 20px;
   background-color: #3a3b3c;
+  color: white;
 }
 
 .searchContainer {
@@ -16,7 +17,7 @@
 }
 
 .searchButton {
-  padding: .5rem 2rem;
+  padding: 0.5rem 2rem;
   background-color: skyblue;
   border: none;
   color: white;
