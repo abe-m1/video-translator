@@ -1,4 +1,4 @@
-import styles from '../styles/PlayListItem.module.scss';
+import styles from '../styles/PlaylistItem.module.scss';
 export default function VideoListItem({
   video,
   onVideoSelect,

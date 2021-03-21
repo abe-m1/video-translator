@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { isConstructorDeclaration } from 'typescript';
 import styles from '../styles/VideoList.module.scss';
 import VideoListItem from './VideoListItem';
 import PlaylistItem from './PlaylistItem';
