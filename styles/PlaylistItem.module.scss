@@ -14,22 +14,11 @@
   display: none;
 }
 
-// .listContainer:hover {
-//   background-color: red;
-// }
-
-// .listContainer:hover .delete {
-//   display: inline-block;
-//   position: absolute;
-//   bottom: 0;
-//   right: 0;
-//   z-index: 5;
-// }
-
 .topContainer:hover .delete {
   display: inline-block;
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: 5px;
   z-index: 5;
+  color: salmon;
 }

@@ -29,9 +29,10 @@ export default function VideoList({
 
   let playlistItems =
     playlist &&
-    playlist.map((video) => {
+    playlist.map((video, i) => {
       return (
         <PlaylistItem
+          key={i}
           video={video}
           deletePlaylist={deletePlaylist}
           onVideoSelect={() => onPlaylistSelect1(video)}
@@ -69,7 +70,7 @@ export default function VideoList({
 
   return (
     <>
-      <div class={styles.container}>
+      <div className={styles.container}>
         {videos.length > 0 && (
           <div>
             <div className={styles.searchBox}>
@@ -96,7 +97,7 @@ export default function VideoList({
               </a>
             </div>
 
-            <div class="details">
+            <div>
               {showVideoList && <ul>{playlistItems}</ul>}
 
               {!showVideoList && (

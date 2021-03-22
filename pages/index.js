@@ -126,7 +126,6 @@ const Home = ({ currentPlaylist }) => {
   };
 
   const getTimeBeforeSave = (time) => {
-    console.log(time);
     setCurrentTime(time);
   };
 
@@ -135,12 +134,10 @@ const Home = ({ currentPlaylist }) => {
   };
 
   const takeQuiz = () => {
-    console.log('take quiz');
     setQuizMode(true);
   };
 
   const deletePlaylist = (video) => {
-    console.log('delete', video);
     setPendingDelete(video);
     setModal(true);
   };
@@ -150,8 +147,7 @@ const Home = ({ currentPlaylist }) => {
 
   const confirmDelete = async () => {
     let videoRef = pendingDelete._id;
-    console.log('confirm delete');
-    //save to db
+
     try {
       const res = await fetch('/api/video', {
         method: 'DELETE',
