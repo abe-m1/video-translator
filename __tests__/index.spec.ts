@@ -7,7 +7,7 @@ describe('Pages', () => {
   describe('Index', () => {
     it('should render without throwing an error', function () {
       // const wrap = mount(<IndexPage/>)
-      expect(2 + 2).toEqual(4)
+      expect(2 + 3).toEqual(5)
     })
   })
 })
